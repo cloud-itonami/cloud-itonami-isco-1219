@@ -1,0 +1,10 @@
+{:itonami.blueprint/id "cloud-itonami-isco-1219"
+ :itonami.blueprint/name "Independent Business Administration Management Practice"
+ :itonami.blueprint/isco-08 "1219"
+ :itonami.blueprint/domain :management/business-administration
+ :itonami.blueprint/license "AGPL-3.0-or-later"
+ :itonami.blueprint/social-impact [:local-jobs :accountability :small-business-support]
+ :itonami.blueprint/governor :business-admin-governor
+ :itonami.blueprint/robotics true
+ :itonami.blueprint/required-technologies [:robotics :identity :forms :dmn :bpmn :audit-ledger]
+ :itonami.blueprint/status :public-oss}
