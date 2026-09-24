@@ -1,0 +1,34 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:physics` runs it.
+;;
+;; README "Robotics premise": a document-handling robot performs record
+;; scanning, filing and compliance-checklist walkthroughs for business
+;; services and administration managers (ISCO 1219). Its physical work is
+;; shelving archive boxes, and one of its checklist items is whether the
+;; records room's partition would keep a neighbouring fire out for the
+;; rated time.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isco-1219"
+ :cases
+ [{:id :archive-box-top-shelf
+   :kind :manipulator
+   :procedure "arm lifts a full archive box from the scanning bench onto the top shelf of the records rack"
+   :params {:l1-m 0.70 :l2-m 0.65 :m1-kg 9.0 :m2-kg 6.5
+            :from [0.75 0.10] :to [0.30 1.20] :duration-s 3.0 :steps 450}
+   :sweep {:param :payload-kg :values [4.0 8.0 12.0 16.0 22.0]}
+   :quantity :peak-tau1-nm
+   :limit {:max 250.0 :basis "estimate: continuous shoulder torque of a ~15 kg-payload collaborative arm with 1.35 m reach"}
+   :boundary {:lo 0.5 :hi 50.0}}
+  {:id :records-room-partition-fire
+   :kind :thermal
+   :procedure "checklist walkthrough: gypsum-board partition between the records room and the neighbouring office is exposed to an 800 C fire for 30 minutes"
+   :params {:conductivity-w-mk 0.25 :density-kg-m3 700.0 :specific-heat-j-kgk 1100.0
+            :t0-c 20.0 :t-hot-c 800.0 :h-front-w-m2k 25.0 :t-back-ambient-c 20.0 :h-back-w-m2k 9.0
+            :threshold-c 160.0 :duration-s 1800.0 :nodes 21}
+   :sweep {:param :thickness-m :values [0.0125 0.025 0.0375 0.050 0.075]}
+   :quantity :final-back-c
+   :limit {:max 160.0 :basis "EN 1363-1 / ISO 834-1 insulation criterion: mean unexposed-face temperature rise <= 140 K (from 20 C); exposure here is a constant 800 C, an approximation of the standard curve (~842 C at 30 min), without the gypsum's dehydration heat sink"}
+   :boundary {:lo 0.005 :hi 0.10}}]}
